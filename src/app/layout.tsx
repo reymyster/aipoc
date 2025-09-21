@@ -71,7 +71,7 @@ export default function RootLayout({
                   </BreadcrumbList>
                 </Breadcrumb>
               </header>
-              <div className="flex flex-1">{children}</div>
+              <div className="flex-1">{children}</div>
             </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>

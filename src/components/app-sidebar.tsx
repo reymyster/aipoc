@@ -15,10 +15,27 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
-// This is sample data.
+// This is sample data. Koifish$9723
 const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
+    {
+      title: "Tooling Tests",
+      items: [
+        {
+          title: "Suspense",
+          url: "/tooling/suspense",
+          isActive: false,
+        },
+        {
+          title: "Effect AI",
+          url: "/tooling/ai",
+        },
+        {
+          title: "Effect RPC",
+          url: "#",
+        },
+      ],
+    },
     {
       title: "Getting Started",
       url: "#",
@@ -169,7 +186,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem key={item.title} className="ml-3">
                     <SidebarMenuButton asChild isActive={item.isActive}>
                       <Link href={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
