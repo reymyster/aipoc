@@ -156,7 +156,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton asChild>
               <Link href="/">
                 <HomeIcon />
-                Home
+                AI PoCs
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
