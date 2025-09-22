@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppSidebar } from "@/components/app-sidebar";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Provider } from "@/components/providers";
 
 import {
   Breadcrumb,
@@ -44,12 +44,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Provider>
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
@@ -74,7 +69,7 @@ export default function RootLayout({
               <div className="flex-1">{children}</div>
             </SidebarInset>
           </SidebarProvider>
-        </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

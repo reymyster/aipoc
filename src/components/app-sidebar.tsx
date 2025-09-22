@@ -31,8 +31,8 @@ const data = {
           url: "/tooling/ai",
         },
         {
-          title: "Effect RPC",
-          url: "#",
+          title: "Tanstack Query",
+          url: "/tooling/tanstack-query",
         },
       ],
     },
