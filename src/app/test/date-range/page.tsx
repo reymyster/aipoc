@@ -30,7 +30,7 @@ export default function Page() {
 
   return (
     <div className="p-1 flex flex-col gap-2 lg:gap-3 p-2 lg:p-3">
-      <h2 className="text-2xl">Natural Language Date Ranges</h2>
+      <h1 className="text-2xl">Natural Language Date Ranges</h1>
       <div className="grid grid-cols-[auto_100px] gap-2">
         <Input
           type="text"
@@ -49,7 +49,7 @@ export default function Page() {
       {fetchStatus === "fetching" && <div>Fetching...</div>}
       {Boolean(data) && fetchStatus === "idle" && (
         <div className="p-2">
-          <h3 className="text-lg mb-2">Result</h3>
+          <h2 className="text-lg mb-2">Result</h2>
           <div>
             {new Date(data.startDate).toLocaleDateString("en-US", {
               timeZone: "UTC",
