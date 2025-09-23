@@ -113,7 +113,7 @@ export default function Page() {
       <Separator />
       {fetchStatus === "fetching" && <div>Fetching...</div>}
       {Boolean(data) && fetchStatus === "idle" && (
-        <Card>
+        <Card className="m-2">
           <CardHeader>
             <CardTitle>Summary: {data.title}</CardTitle>
           </CardHeader>

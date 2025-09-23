@@ -13,7 +13,7 @@ const OpenAiConfig = OpenAiClient.layerConfig({
   apiKey: Config.redacted("OPENAI_API_KEY"),
 });
 
-const OpenAI = OpenAiLanguageModel.model("gpt-5-mini", {
+const OpenAI = OpenAiLanguageModel.model("gpt-5", {
   reasoning: {
     effort: "minimal",
   },
