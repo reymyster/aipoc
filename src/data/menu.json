@@ -2048,7 +2048,7 @@
 		"fParent": "mn-1-1-100-40-18",
 		"fOrder": 30,
 		"fName": "List Journals",
-		"fDescription": "List Journals"
+		"fDescription": "List Journals and Journal Entries"
 	},
 	{
 		"fKey": "mn-1-1-100-40-50-55",
