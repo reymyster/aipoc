@@ -14,7 +14,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
-// This is sample data. Koifish$9723
+// This is sample data.
 const data = {
   navMain: [
     {
@@ -47,6 +47,10 @@ const data = {
           title: "Date Ranges",
           url: "/test/date-range",
           isActive: false,
+        },
+        {
+          title: "Diff Summary",
+          url: "/test/diff-summary",
         },
       ],
     },
