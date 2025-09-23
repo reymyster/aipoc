@@ -29,7 +29,7 @@ export default function Page() {
   if (!data) console.log({ data });
 
   return (
-    <div className="p-1 flex flex-col gap-2 lg:gap-3 p-2 lg:p-3">
+    <div className="p-2 flex flex-col gap-2 lg:gap-3 lg:p-3">
       <h1 className="text-2xl">Natural Language Date Ranges</h1>
       <div className="grid grid-cols-[auto_100px] gap-2">
         <Input
