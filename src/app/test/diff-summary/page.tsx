@@ -29,8 +29,9 @@ export default function Page() {
   const [modifiedState, setModifiedState] = useState<FormState>(originalState);
   const [readyToFire, setReadyToFire] = useState(false);
 
-  const change: Record<string, string> = (() => {
+  const change: Record<string, string> | null = (() => {
     const c: Record<string, string> = {};
+    let count = 0;
 
     if (
       originalState.startDate?.getTime() !== modifiedState.startDate?.getTime()
@@ -40,6 +41,7 @@ export default function Page() {
       ] = `updated from ${originalState.startDate?.toDateString()} to ${
         modifiedState.startDate
       }; Start Date is the first date of an applicable range for this record`;
+      count++;
     }
 
     if (originalState.endDate?.getTime() !== modifiedState.endDate?.getTime()) {
@@ -48,6 +50,7 @@ export default function Page() {
       ] = `updated from ${originalState.endDate?.toDateString()} to ${
         modifiedState.endDate
       }; End Date is the last date of an applicable range for this record`;
+      count++;
     }
 
     if (originalState.creditLimit !== modifiedState.creditLimit) {
@@ -56,15 +59,17 @@ export default function Page() {
       )} to ${currencyFormatter(
         modifiedState.creditLimit
       )}; Credit Limit is a USD dollar amount credit limit given to the user associated with this record.`;
+      count++;
     }
 
-    return c;
+    return count > 0 ? c : null;
   })();
 
   const { fetchStatus, data } = useQuery({
     queryKey: ["test-summary", modifiedState.creditLimit],
     enabled: readyToFire,
     queryFn: async () => {
+      if (!change) return { title: "No Changes", bullets: [] };
       const initial = await fetch("/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
