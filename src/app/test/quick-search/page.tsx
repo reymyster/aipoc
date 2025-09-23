@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import Fuse, { type FuseResultMatch } from "fuse.js";
 import { Fragment, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -169,7 +170,7 @@ function useDebouncedValue<T>(value: T, delay = 250) {
 
 export default function Page() {
   const [searchValue, setSearchValue] = useState("");
-  const debouncedSearchValue = useDebouncedValue(searchValue, 100);
+  const debouncedSearchValue = useDebouncedValue(searchValue, 1);
   const [searchResults, setSearchResults] = useState<
     ReturnType<typeof searchInstant>
   >([]);
