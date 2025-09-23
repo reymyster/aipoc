@@ -43,6 +43,11 @@ const data = {
           url: "/test/quick-search",
           isActive: false,
         },
+        {
+          title: "Date Ranges",
+          url: "/test/date-range",
+          isActive: false,
+        },
       ],
     },
   ],
