@@ -66,7 +66,12 @@ export default function Page() {
   })();
 
   const { fetchStatus, data } = useQuery({
-    queryKey: ["test-summary", modifiedState.creditLimit],
+    queryKey: [
+      "test-summary",
+      modifiedState.creditLimit,
+      modifiedState.endDate?.getTime() ?? 0,
+      modifiedState.startDate?.getTime() ?? 0,
+    ],
     enabled: readyToFire,
     queryFn: async () => {
       if (!change) return { title: "No Changes", bullets: [] };
