@@ -13,6 +13,9 @@ class Summary extends Schema.Class<Summary>("Summary")({
   bullets: Schema.Array(Schema.NonEmptyString).annotations({
     description: "up to 7 concise bullets of the change",
   }),
+  riskFlags: Schema.Array(Schema.NonEmptyString).annotations({
+    description: "Potential risk flags e.g. large deltas",
+  }),
 }) {}
 
 const SYSTEM = `You are an assistant that writes crisp change notes for UIs.
