@@ -1,9 +1,11 @@
 import { setTimeout } from "node:timers";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 async function loadData() {
   const p: Promise<string> = new Promise((resolve) => {
-    setTimeout(() => resolve("Hello, world!"), 2000);
+    setTimeout(() => resolve("Hello, world!"), 3000);
   });
 
   return p;
