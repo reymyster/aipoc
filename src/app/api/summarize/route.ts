@@ -38,14 +38,18 @@ class Summary extends Schema.Class<Summary>("Summary")({
 
 const SYSTEM = `You are an assistant that writes crisp change notes for UIs.
 Only use the provided changes and field labels. Be neutral and precise.
-When numbers change, mention deltas. Prefer human labels over raw paths.
+When numbers or dates change, mention deltas. Prefer human labels over raw paths.
 Keep it short and non-repetitive. Do not invent data.`;
 
 export async function POST(request: Request) {
   const res = await request.json();
   const input = Schema.decodeUnknownSync(RequestInput)(res);
 
-  const model = OpenRouterLanguageModel.model(input.model);
+  const model = OpenRouterLanguageModel.model(input.model, {
+    reasoning: {
+      effort: "minimal",
+    },
+  });
 
   const logic = Effect.gen(function* () {
     const output = yield* getSummary(input.change);

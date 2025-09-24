@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDownIcon, WandSparklesIcon } from "lucide-react";
+import { ChevronDownIcon, Loader2Icon, WandSparklesIcon } from "lucide-react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -139,7 +139,11 @@ export default function Page() {
         </Select>
       </div>
       <Separator />
-      {fetchStatus === "fetching" && <div>Fetching...</div>}
+      {fetchStatus === "fetching" && (
+        <div className="flex items-center justify-center">
+          <Loader2Icon className="size-16 animate-spin m-4" />
+        </div>
+      )}
       {Boolean(data) && fetchStatus === "idle" && (
         <Card className="m-2">
           <CardHeader>
