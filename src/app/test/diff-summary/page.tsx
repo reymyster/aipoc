@@ -20,12 +20,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
 export default function Page() {
   const [modifiedState, setModifiedState] = useState<FormState>(originalState);
+  const [model, setModel] = useState("x-ai/grok-4-fast:free");
   const [readyToFire, setReadyToFire] = useState(false);
 
   const change: Record<string, string> | null = (() => {
@@ -77,7 +85,7 @@ export default function Page() {
       const initial = await fetch("/api/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ change: JSON.stringify(change) }),
+        body: JSON.stringify({ change: JSON.stringify(change), model }),
       });
       const json = await initial.json();
       return json;
@@ -89,6 +97,8 @@ export default function Page() {
   }, [fetchStatus]);
 
   if (data) console.log({ data });
+
+  console.log({ model });
 
   return (
     <div className="p-2 max-w-5xl">
@@ -107,12 +117,26 @@ export default function Page() {
         />
         <Button
           type="button"
-          className="col-span-2"
           variant="outline"
           onClick={() => setReadyToFire(true)}
         >
           Summarize <WandSparklesIcon className="size-4 text-green-500" />
         </Button>
+        <Select onValueChange={(e) => setModel(e)} value={model}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select LLM Model" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="x-ai/grok-4-fast:free">Grok 4 Fast</SelectItem>
+            <SelectItem value="google/gemini-2.5-flash">
+              Gemini 2.5 Flash
+            </SelectItem>
+            <SelectItem value="deepseek/deepseek-chat-v3-0324">
+              DeepSeek Chat v3
+            </SelectItem>
+            <SelectItem value="openai/gpt-5-mini">GPT 5 Mini</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <Separator />
       {fetchStatus === "fetching" && <div>Fetching...</div>}

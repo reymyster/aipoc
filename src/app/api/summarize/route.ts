@@ -1,9 +1,27 @@
 import { LanguageModel } from "@effect/ai";
-import { Effect, Schema } from "effect";
-import { Runtime } from "@/lib/server";
+import {
+  OpenRouterClient,
+  OpenRouterLanguageModel,
+} from "@effect/ai-openrouter";
+import { FetchHttpClient } from "@effect/platform";
+import { Config, Effect, Layer, Schema } from "effect";
+
+const OpenRouterModels = Schema.Literal(
+  "x-ai/grok-4-fast:free",
+  "google/gemini-2.5-flash",
+  "deepseek/deepseek-chat-v3-0324",
+  "openai/gpt-5-mini"
+).annotations({
+  decodingFallback: (issue) =>
+    Effect.gen(function* () {
+      yield* Effect.log(issue._tag);
+      return yield* Effect.succeed(OpenRouterModels.literals[0]); // default to grok 4 fast
+    }),
+});
 
 class RequestInput extends Schema.Class<RequestInput>("RequestInput")({
   change: Schema.NonEmptyString,
+  model: OpenRouterModels,
 }) {}
 
 class Summary extends Schema.Class<Summary>("Summary")({
@@ -27,13 +45,15 @@ export async function POST(request: Request) {
   const res = await request.json();
   const input = Schema.decodeUnknownSync(RequestInput)(res);
 
+  const model = OpenRouterLanguageModel.model(input.model);
+
   const logic = Effect.gen(function* () {
     const output = yield* getSummary(input.change);
 
     return output;
-  });
+  }).pipe(Effect.provide(model), Effect.provide(OpenRouter));
 
-  const result = await Runtime.runPromise(logic);
+  const result = await Effect.runPromise(logic);
   const output = Schema.encodeSync(Summary)(result);
 
   return Response.json(output);
@@ -47,3 +67,7 @@ const getSummary = Effect.fn("getSummary")(function* (query: string) {
 
   return response.value;
 });
+
+const OpenRouter = OpenRouterClient.layerConfig({
+  apiKey: Config.redacted("OPENROUTERAI_API_KEY"),
+}).pipe(Layer.provide(FetchHttpClient.layer));
