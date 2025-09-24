@@ -15,7 +15,7 @@ const OpenRouterModels = Schema.Literal(
   decodingFallback: (issue) =>
     Effect.gen(function* () {
       yield* Effect.log(issue._tag);
-      return yield* Effect.succeed(OpenRouterModels.literals[0]); // default to grok 4 fast
+      return yield* Effect.succeed(OpenRouterModels.literals[1]); // default to gemini flash
     }),
 });
 

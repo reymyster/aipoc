@@ -33,7 +33,7 @@ import { cn } from "@/lib/utils";
 
 export default function Page() {
   const [modifiedState, setModifiedState] = useState<FormState>(originalState);
-  const [model, setModel] = useState("x-ai/grok-4-fast:free");
+  const [model, setModel] = useState("google/gemini-2.5-flash");
   const [readyToFire, setReadyToFire] = useState(false);
 
   const change: Record<string, string> | null = (() => {
