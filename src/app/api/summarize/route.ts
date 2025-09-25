@@ -31,14 +31,11 @@ class Summary extends Schema.Class<Summary>("Summary")({
   bullets: Schema.Array(Schema.NonEmptyString).annotations({
     description: "up to 7 concise bullets of the change",
   }),
-  riskFlags: Schema.Array(Schema.NonEmptyString).annotations({
-    description: "Potential risk flags e.g. large deltas",
-  }),
 }) {}
 
 const SYSTEM = `You are an assistant that writes crisp change notes for UIs.
 Only use the provided changes and field labels. Be neutral and precise.
-When numbers or dates change, mention deltas. Prefer human labels over raw paths.
+When numbers or dates change, mention deltas.  Prefer summarizing with deltas over regurgitating the actual change. Prefer human labels over raw paths.
 Keep it short and non-repetitive. Do not invent data.`;
 
 export async function POST(request: Request) {
