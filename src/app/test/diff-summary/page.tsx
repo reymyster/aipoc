@@ -128,7 +128,7 @@ export default function Page() {
       originalState.zip === modifiedState.zip
     ) {
       risks.push(
-        `⚠️ Warning: Address State updated but Street/City/ZIP remain the same, please double check.`
+        `⚠️ Warning: State updated but Street/City/ZIP remain the same, please double check.`
       );
     }
 

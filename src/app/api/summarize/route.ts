@@ -62,7 +62,10 @@ export async function POST(request: Request) {
 
 const getSummary = Effect.fn("getSummary")(function* (query: string) {
   const response = yield* LanguageModel.generateObject({
-    prompt: `${SYSTEM} ${query}`,
+    prompt: [
+      { role: "system", content: SYSTEM },
+      { role: "user", content: query },
+    ],
     schema: Summary,
   });
 
