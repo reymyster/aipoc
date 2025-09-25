@@ -90,6 +90,18 @@ export default function Page() {
       count++;
     }
 
+    if (
+      originalState.streetAddress !== modifiedState.streetAddress ||
+      originalState.city !== modifiedState.city ||
+      originalState.state !== modifiedState.state ||
+      originalState.zip !== modifiedState.zip
+    ) {
+      c[
+        "Address"
+      ] = `updated from "${originalState.streetAddress}, ${originalState.city}, ${originalState.state} ${originalState.zip}" to "${modifiedState.streetAddress}, ${modifiedState.city}, ${modifiedState.state} ${modifiedState.zip}"`;
+      count++;
+    }
+
     return count > 0 ? c : null;
   })();
 
