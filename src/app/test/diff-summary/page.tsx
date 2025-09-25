@@ -39,7 +39,7 @@ const getShortDate = (d: Date | undefined): string => {
 
 export default function Page() {
   const [modifiedState, setModifiedState] = useState<FormState>(originalState);
-  const [model, setModel] = useState("google/gemini-2.5-flash");
+  const [model, setModel] = useState("x-ai/grok-4-fast:free");
   const [readyToFire, setReadyToFire] = useState(false);
 
   const onReset = () => setModifiedState(originalState);
