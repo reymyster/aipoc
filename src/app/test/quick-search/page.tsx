@@ -190,11 +190,11 @@ export default function Page() {
 
   return (
     <div className="p-2 flex flex-col gap-2 lg:gap-4">
-      <h2 className="text-2xl">Quick Search</h2>
+      <h2 className="text-2xl">Smart Search</h2>
       <div className="p-2 grid grid-cols-[auto_100px] gap-2">
         <Input
           type="text"
-          placeholder="Quick Search"
+          placeholder="Smart Search"
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
         />

@@ -299,9 +299,7 @@ function TestForm({
             onClick={onReset}
             variant="outline"
             disabled={disabled || !onReset}
-            className={cn(
-              disabled || !onReset ? "cursor-not-allowed" : "cursor-pointer"
-            )}
+            className={cn(disabled || !onReset ? "hidden" : "cursor-pointer")}
           >
             Reset
           </Button>

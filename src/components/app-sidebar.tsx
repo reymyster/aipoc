@@ -39,7 +39,7 @@ const data = {
       title: "AI Tests",
       items: [
         {
-          title: "Fuzzy Search",
+          title: "Smart Search",
           url: "/test/quick-search",
           isActive: false,
         },
