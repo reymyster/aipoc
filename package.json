@@ -40,6 +40,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
+		"@effect/language-service": "^0.41.0",
 		"@tailwindcss/postcss": "^4",
 		"@types/node": "^24",
 		"@types/react": "^19",
