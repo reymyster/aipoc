@@ -13,7 +13,7 @@ export const LoggerLayer = Logger.add(
 const RpcHelloLayer = RpcHello.toLayer({
   HelloRequest: (params) =>
     Effect.gen(function* () {
-      yield* Effect.log(params.name);
+      yield* Effect.log(`HelloRequest params.name: ${params.name}`);
       return `Hello, ${params.name}!`;
     }),
 }).pipe(Layer.provide(LoggerLayer));

@@ -1,58 +1,51 @@
 "use client";
 
-import { FetchHttpClient } from "@effect/platform";
-import { RpcClient, RpcSerialization } from "@effect/rpc";
-import { Effect, Layer } from "effect";
-import { useCallback, useEffect, useState } from "react";
-import { RpcHello } from "@/lib/api";
+import { Effect } from "effect";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { RpcHelloClient } from "@/lib/api";
+import { Runtime } from "@/lib/client";
 
-const ProtocolLive = RpcClient.layerProtocolHttp({
-  url: "/api/rpc",
-}).pipe(Layer.provide([FetchHttpClient.layer, RpcSerialization.layerNdjson]));
+const logic = Effect.fn("TestHelloClient")(function* (name: string) {
+  console.log(`querying rpc with name: ${name}`);
 
-export class RpcHelloClient extends Effect.Service<RpcHelloClient>()(
-  "RpcHelloClient",
-  {
-    dependencies: [ProtocolLive],
-    scoped: RpcClient.make(RpcHello),
-  }
-) {}
-const main = Effect.gen(function* () {
-  console.log("entering main");
   const client = yield* RpcHelloClient;
-
-  console.log("yielded client");
-
-  const response = yield* client
-    .HelloRequest({ name: "Tester" })
-    .pipe(Effect.tapError((err) => Effect.log(JSON.stringify(err))));
-
-  console.log(`yielded client response ${response}`);
+  const response = yield* client.HelloRequest({ name });
 
   return response;
-}).pipe(Effect.provide(RpcHelloClient.Default));
+}, Effect.provide(RpcHelloClient.Default));
 
 export default function Page() {
+  const [name, setName] = useState("");
   const [res, setRes] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const load = useCallback(async () => {
-    console.log("Entering load");
-    const response = await Effect.runPromise(main);
-    console.log(`Response: ${response}`);
+  const query = async () => {
+    setLoading(true);
+
+    const response = await Runtime.runPromise(logic(name));
     setRes(response);
-    setLoading(false);
-  }, []);
 
-  useEffect(() => {
-    console.log("Calling load");
-    load();
-  }, [load]);
+    setLoading(false);
+  };
 
   return (
-    <div>
+    <div className="p-2 flex flex-col gap-2 lg:gap-3 lg:p-3">
+      <h1 className="text-2xl">Effect RPC Test</h1>
+      <div className="grid grid-cols-[auto_100px] gap-2 lg:gap-3">
+        <Input
+          type="text"
+          placeholder="Please enter your name"
+          value={name}
+          onChange={(e) => setName(e.currentTarget.value)}
+        />
+        <Button type="button" disabled={loading || !name} onClick={query}>
+          Submit
+        </Button>
+      </div>
       {loading && <div>Loading...</div>}
-      <div>Response --{res}--</div>
+      {!loading && Boolean(res) && <div>Response --&gt;{res}&lt;--</div>}
     </div>
   );
 }
