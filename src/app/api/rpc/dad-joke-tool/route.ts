@@ -19,7 +19,9 @@ const OpenRouter = OpenRouterClient.layerConfig({
   apiKey: Config.redacted("OPENROUTERAI_API_KEY"),
 }).pipe(Layer.provide(FetchHttpClient.layer));
 
-const OpenRouterModel = OpenRouterLanguageModel.model("x-ai/grok-4-fast:free");
+const OpenRouterModel = OpenRouterLanguageModel.model(
+  "google/gemini-2.5-flash"
+);
 
 const RpcDadJokeLayer = RpcDadJoke.toLayer({
   GetDadJoke: (params) =>
