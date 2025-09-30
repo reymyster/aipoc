@@ -37,6 +37,10 @@ const data = {
           title: "Effect RPC",
           url: "/tooling/rpc",
         },
+        {
+          title: "AI Tooling",
+          url: "/tooling/dad-joke-tool",
+        },
       ],
     },
     {
