@@ -13,15 +13,13 @@ const OpenAiConfig = OpenAiClient.layerConfig({
   apiKey: Config.redacted("OPENAI_API_KEY"),
 });
 
+const OpenAiDependencies = Layer.provide(OpenAiConfig, FetchHttpClient.layer);
+
 const OpenAI = OpenAiLanguageModel.model("gpt-5-mini", {
   reasoning: {
     effort: "minimal",
   },
-}).pipe(
-  Effect.provide(OpenAiConfig),
-  Effect.provide(FetchHttpClient.layer),
-  Layer.unwrapEffect
-);
+}).pipe(Effect.provide(OpenAiDependencies), Layer.unwrapEffect);
 
 const LogLevelLive = Config.logLevel("LOG_LEVEL").pipe(
   Config.withDefault(LogLevel.All),

@@ -40,16 +40,21 @@ const RpcDadJokeLayer = RpcDadJoke.toLayer({
 
       if (typeof response === "string") {
         yield* Effect.log(`Response as string: --${response}--`);
+
+        return response || "Empty response string";
       } else {
         yield* Effect.log(
           `Response as text: --${response.text}--, ${JSON.stringify(response)}`
         );
+
+        for (const toolResult of response.toolResults) {
+          if (toolResult.name === "GetDadJoke") {
+            return toolResult.result;
+          }
+        }
       }
 
-      return typeof response === "string"
-        ? response || "Empty response string"
-        : response.content.findLast((_) => true)?.["result"] ??
-            "Empty response text";
+      return "No result found";
     }),
 }).pipe(Layer.provide([LoggerLayer, FetchHttpClient.layer, OpenRouter]));
 

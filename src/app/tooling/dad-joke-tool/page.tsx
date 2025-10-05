@@ -49,7 +49,7 @@ export default function Page() {
         <div>
           Response <br />
           <br />
-          --&gt;{res}&lt;--
+          <pre className="text-wrap">{res}</pre>
         </div>
       )}
     </div>
